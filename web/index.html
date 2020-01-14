@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script type="text/javascript" src="jquery-3.4.1.js"></script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"> </script>
+<script type="text/javascript">
+$(document).ready(function () {
+
+	$.ajax({
+		type: "GET",
+		url:"humidity.csv",
+		dataType: "text",
+		success: function(data) {processData(data);}
+	});
+
+//this shit needs to be replaced with something legitimate
+	function processData( allText ) {
+		var allLinesArray = allText.split("\n");
+		if( allLinesArray.length > 0 ){
+			var humidityPoints = [];
+			var temperaturePoints = [];
+			for (var i = 0; i <= allLinesArray.length-1; i++) {
+				var rowData = allLinesArray[i].split(",");
+				humidityPoints.push({ label:rowData[0], y:parseInt(rowData[3]) });
+				temperaturePoints.push({ label:rowData[0], y:parseInt(rowData[2]) });
+			}
+			drawChart(humidityPoints,temperaturePoints);
+		}
+	}
+
+//canvas js library
+	function drawChart(humidityPoints, temperaturePoints) {
+		var chart = new CanvasJS.Chart("chartContainer", {
+		animationEnabled: true,
+		zoomEnabled: true,
+		theme: "light2",
+	title:{
+		text: "Humidity"
+	},
+	toolTip: {
+		shared: true
+	},
+	legend:{
+		cursor:"pointer",
+		verticalAlign: "bottom",
+		horizontalAlign: "left",
+		dockInsidePlotArea: true,
+	},
+	data: [{        
+		type: "line",  
+		name: "Humidity",     
+		xValueFormatString: "####%",
+		dataPoints: humidityPoints, 
+		axisYIndex: 0
+	},  
+	],
+	axisY:{
+            title: "Relative Humidity",
+			suffix: "%"
+        },
+	axisX: {
+		title: "Date",
+	},
+	
+});
+var chart1 = new CanvasJS.Chart("chartContainer1", {
+		animationEnabled: true,
+		zoomEnabled: true,
+		theme: "light2",
+	title:{
+		text: "Temperature"
+	},
+	toolTip: {
+		shared: true
+	},
+	legend:{
+		cursor:"pointer",
+		verticalAlign: "bottom",
+		horizontalAlign: "left",
+		dockInsidePlotArea: true,
+	},
+	data: [{   
+		type: "line",   
+		name: "Temperature",     
+		xValueFormatString: "####C",   
+		dataPoints: temperaturePoints, 
+	}],
+	axisY:{
+            title: "Temperature",
+			suffix: "C"
+        },
+	axisX: {
+		title: "Date",
+	},
+	
+});
+		chart.render();
+		chart1.render();
+	}
+	
+});
+</script>
+</head>
+<body style="background-color:#ADB68B;">
+<div id="chartContainer" style="height: 800px; width: 100%; background-color:#ADB68B; background-repeat:no-repeat; background-position:center; background-size:100% 100%; font-size: small;"></div>
+<div id="chartContainer1" style="height: 800px; width: 100%; background-color:#ADB68B; background-repeat:no-repeat; background-position:center; background-size:100% 100%; font-size: small;"></div>
+</body>
+</html>
