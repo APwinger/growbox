@@ -14,3 +14,6 @@ master.py spawns another subprocess, watering.py which triggers an x gph water p
 
 The script updates humidity.csv in the web/ folder with relative humidity and temperature values pulled from a DHT11 sensor as well as if the lights on are or off. 
 
+
+TODO: Add subprocess script to generate graphs in image form at the end of each week 
+should save off to a folder with unique names
