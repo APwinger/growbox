@@ -4,28 +4,31 @@ import psutil
 import definitions
 import sys
 
+
 h = definitions.h
 loc = definitions.location
-#this should be the only argument
-script = sys.argv[1]
+script = 'switch.py'
+#arg 1 = channel arg 2 = on (true) or off (false)
+channel = sys.argv[1]
+on = sys.argv[2]
 found = False
 
-
+print(channel, on)
 for process in psutil.process_iter():
-    if process.cmdline() == ['python', loc + script]:
+    if process.cmdline() == ['python', loc + script, channel]:
         #check to see if lights should be on or off
-        if h < 20:
+        if on:
             print('Process found. Not opening it.')
             found = True
             break
-        if h >= 20:
+        if off:
             #kill the light
             print('Process found. Terminating it.')
             process.terminate()
-            subprocess.Popen(['python', loc + script])
-            print("light off")
+            subprocess.Popen(['python', loc + script, channel])
+            print("channel: " + channel + " off")
             found = True
 
-if not found and h < 20:
+if not found and on:
     print('Process not found, should be running, starting now...')
-    subprocess.Popen(['python', loc + script])
+    subprocess.Popen(['python', loc + script, channel])

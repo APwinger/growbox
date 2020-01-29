@@ -3,7 +3,8 @@ import RPi.GPIO as GPIO
 import signal
 import sys
 
-lightpin = definitions.channel1pin
+pin = int(sys.argv[1])
+print(pin, "turning on")
 run = True
 
 def handler_stop_signals(signum, frame):
@@ -15,11 +16,10 @@ signal.signal(signal.SIGTERM, handler_stop_signals)
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
-lightpin = 17
-GPIO.setup(lightpin, GPIO.OUT)
+GPIO.setup(pin, GPIO.OUT)
 
 while run:
-    GPIO.output(17, GPIO.HIGH)
+    GPIO.output(pin, GPIO.HIGH)
 
 
 GPIO.cleanup()
