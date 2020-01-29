@@ -25,7 +25,6 @@ for process in psutil.process_iter():
             #kill the light
             print('Process found. Terminating it.')
             process.terminate()
-            subprocess.Popen(['python', loc + script, channel])
             print("channel: " + channel + " off")
             found = True
 
