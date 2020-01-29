@@ -1,8 +1,9 @@
-
+import definitions
 import RPi.GPIO as GPIO
 import signal
 import sys
 
+lightpin = definitions.channel1pin
 run = True
 
 def handler_stop_signals(signum, frame):
