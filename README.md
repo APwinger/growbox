@@ -1,5 +1,7 @@
 # growbox
 # growbox
+MASTER IS NOW DEPRECATED. KEEPING IT BECAUSE IM BAD AT GIT AND AM BORROWING CODE. MVC IS LIVE. 
+
 Growbox is a raspberry pi controlled indoor grow-tent for growing "tomato-like" plants. 
 
 Growbox works via crontab, the master.py script should be set to run every minute or every hour
