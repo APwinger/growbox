@@ -1,3 +1,5 @@
 #!/usr/bin/python3
-class BoxController:
-    
+from Outlet import Outlet
+
+humidifier = Outlet(2)
+humidifier.off()
