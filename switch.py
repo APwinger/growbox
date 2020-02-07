@@ -2,9 +2,11 @@ import definitions
 import RPi.GPIO as GPIO
 import signal
 import sys
+from debug import debug
+
 
 pin = definitions.pinMap[int(sys.argv[1])]
-print(pin, "turning on")
+debug(pin + " turning on")
 run = True
 
 def handler_stop_signals(signum, frame):

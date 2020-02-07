@@ -3,6 +3,7 @@ import subprocess
 import psutil
 import definitions
 import sys
+from debug import debug
 
 # Using Daemonhunter.py:
 #     daemonhunter(int channel, boolean on)
@@ -17,22 +18,23 @@ def daemonhunter(channel, on):
     script = 'switch.py'
     found = False
 
-    print('python', str(loc + script), str(channel))
+    debug('python' + str(loc + script) + str(channel))
     for process in psutil.process_iter():
         if process.cmdline() == ['python', str(loc + script), str(channel)]:
             #check to see if lights should be on or off
             if on:
-                print('Process found. Not opening it.')
+                debug('Process found. Not opening it.')
                 found = True
                 break
             if not on:
                 #kill the light
-                print('Process found. Terminating it.')
+                debug('Process found. Terminating it.')
                 process.terminate()
-                print("channel: " + str(channel) + " off")
+                debug("channel: " + str(channel) + " off")
                 found = True
 
     if not found and on:
-        print('Process not found, should be running, starting now...')
-        print(loc + script, channel)
+        debug('Process not found, should be running, starting now...')
+        #print(loc + script, channel)
         subprocess.Popen(['python', loc + script, str(channel)])
+
