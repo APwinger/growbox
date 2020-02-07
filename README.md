@@ -13,7 +13,7 @@ Switching in this project is weird:
     In order to keep something on, I need to pull a pin high for however long.
     This is done by spawning the switch script, using daemonhunter.py. 
 
-#Electronics
+# Electronics
     ADJ SRP8 Power pack relay - 120v relay
     MIC2981 - transistor to switch 12v control circuits for relay 
     RPi 3 - using 3.3v gpio to switch transistor channels
