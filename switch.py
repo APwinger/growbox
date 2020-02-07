@@ -3,7 +3,7 @@ import RPi.GPIO as GPIO
 import signal
 import sys
 
-pin = int(sys.argv[1])
+pin = definitions.pinMap[int(sys.argv[1])]
 print(pin, "turning on")
 run = True
 
