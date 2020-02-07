@@ -1,19 +1,19 @@
 # growbox
 # growbox
-Growbox is a raspberry pi controlled indoor grow-tent for growing "tomato-like" plants. 
+Growbox is a raspberry pi controlled indoor grow-tent for growing tomato-like plants. 
 
-Growbox works via crontab, the master.py script should be set to run every minute or every hour
+BoxController.py should always be running, it is the main daemon script that will spawn every thing else. 
 
-The electronic control comes from a ADJ SRP8 power pack relay. This is connected, via a dsub 9 pin connector to the pi's gpio. 
+There are two classes in this project, Sensors and Outlets. 
 
-the master.py script will start a subprocess script, lights.py between the hours of midnight and 7pm. Between 7pm and midnight of the next day, lights.py will be killed and light_off.py will be called for redundancy.
+Sensors will return a value, Outlets can be switched on and off. 
 
-master.py spawns another subprocess, watering.py which triggers an x gph water pump on 
+Switching in this project is weird:
+    Currently using RPi GPIO for controlling a 120v relay (ADJ SRP8)
+    In order to keep something on, I need to pull a pin high for however long.
+    This is done by spawning the switch script, using daemonhunter.py. 
 
-
-
-The script updates humidity.csv in the web/ folder with relative humidity and temperature values pulled from a DHT11 sensor as well as if the lights on are or off. 
-
-
-TODO: Add subprocess script to generate graphs in image form at the end of each week 
-should save off to a folder with unique names
+#Electronics
+    ADJ SRP8 Power pack relay - 120v relay
+    MIC2981 - transistor to switch 12v control circuits for relay 
+    RPi 3 - using 3.3v gpio to switch transistor channels

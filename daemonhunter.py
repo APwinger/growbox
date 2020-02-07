@@ -4,7 +4,11 @@ import psutil
 import definitions
 import sys
 
-#arg 1 = channel arg 2 = on (true) or off (false)
+# Using Daemonhunter.py:
+#     daemonhunter(int channel, boolean on)
+#     channel is an outlet number 1-8 (converted via definitions.pinMap to BCM spec)
+#     on = True(on), False(off)
+
 def daemonhunter(channel, on):
     if not isinstance(channel, int):
         raise ValueError("channel needs to be an int", channel)
