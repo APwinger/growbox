@@ -6,7 +6,7 @@ from debug import debug
 
 
 pin = definitions.pinMap[int(sys.argv[1])]
-debug(pin + " turning on")
+debug(str(pin) + " turning on")
 run = True
 
 def handler_stop_signals(signum, frame):

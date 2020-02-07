@@ -2,6 +2,11 @@
 from Outlet import Outlet
 from Sensor import Sensor
 import definitions
+import psutil
+
+for process in psutil.process_iter():
+        if process.cmdline() == ['/home/pi/growbox/venv/bin/python', '/home/pi/growbox/BoxController.py']:
+            exit()
 
 light = Outlet(1)
 humidifier = Outlet(2)
@@ -14,22 +19,24 @@ def lightsTwentyOn():
     else:
         light.off()
 
-#humidifier will maintain VPD according to sensor readings
+#humidifier will keep humidity above 45%
 def humidify(sensor):
     if not isinstance(sensor, Sensor):
         raise ValueError("sensor must be a Sensor")
     values = sensor.read()
     temp = values['temp']
-    hum = values['hum']
-    if isinstance(hum, float):
-        if(hum < 45):
-            humidifier.on()
+    hum = float(values['hum'])
+    if(hum < definitions.desiredHum):
+        humidifier.on()
+    else:
+        humidifier.off()
         
 
 while True:
     lightsTwentyOn()
-    values = tNh.read()
-    print("temp: ", values['temp'], "hum:", values['hum'])
+    humidify(tNh)
+    #values = tNh.read()
+    #print("temp: ", values['temp'], "hum:", values['hum'])
 
 
 
